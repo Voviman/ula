@@ -34,6 +34,15 @@ function setSelectedImage(blob, fileName) {
   setPreview(blob);
 }
 
+function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Failed to read image file."));
+    reader.readAsDataURL(blob);
+  });
+}
+
 async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -91,20 +100,31 @@ async function analyzeImage() {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("image", selectedImageBlob, selectedImageName);
-
   setStatus("Analyzing image...");
   analyzeBtn.disabled = true;
   resultOutput.textContent = "Please wait...";
 
   try {
+    const imageDataUrl = await blobToDataUrl(selectedImageBlob);
     const response = await fetch("/api/analyze", {
       method: "POST",
-      body: formData
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        imageDataUrl,
+        fileName: selectedImageName
+      })
     });
 
-    const data = await response.json();
+    const rawText = await response.text();
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (_error) {
+      throw new Error(`Server returned non-JSON response (${response.status}).`);
+    }
+
     if (!response.ok || !data.ok) {
       throw new Error(data.error || "Analysis failed.");
     }

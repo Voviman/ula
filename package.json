@@ -1,0 +1,27 @@
+{
+  "name": "picturize",
+  "version": "1.0.0",
+  "description": "Web app for clothing metadata analysis from photos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "fashion",
+    "image-analysis",
+    "vision",
+    "metadata"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "multer": "^2.1.1",
+    "openai": "^4.71.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

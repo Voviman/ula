@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picturize - Clothing Analyzer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>ULA Picturize</h1>
+
+      <section class="card">
+        <h2>Choose Image</h2>
+
+        <div class="row">
+          <label class="label" for="fileInput">Upload image</label>
+          <input id="fileInput" type="file" accept="image/*" />
+        </div>
+
+        <div class="row camera-actions">
+          <button id="startCameraBtn" type="button">Start camera</button>
+          <button id="captureBtn" type="button" disabled>Capture photo</button>
+          <button id="stopCameraBtn" type="button" disabled>Stop camera</button>
+        </div>
+
+        <video id="cameraPreview" autoplay playsinline></video>
+        <canvas id="captureCanvas" class="hidden"></canvas>
+
+        <div class="preview-wrap">
+          <img id="imagePreview" alt="Selected image preview" />
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Analyze</h2>
+        <button id="analyzeBtn" type="button" disabled>Analyze clothing</button>
+        <p id="statusText" class="status"></p>
+      </section>
+
+      <section class="card">
+        <h2>Result</h2>
+        <pre id="resultOutput">No analysis yet.</pre>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
